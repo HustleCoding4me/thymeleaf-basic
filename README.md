@@ -6,36 +6,36 @@
 
 # 기본 문법 
 
-• 간단한 표현:
-    ◦ 변수 표현식: ${...}
-    ◦ 선택 변수 표현식: *{...}
-    ◦ 메시지 표현식: #{...}
-    ◦ 링크 URL 표현식: @{...}
-    ◦ 조각 표현식: ~{...}
-• 리터럴
-    ◦ 텍스트: 'one text', 'Another one!',…
-    ◦ 숫자: 0, 34, 3.0, 12.3,…
-    ◦ 불린: true, false
-    ◦ 널: null
-    ◦ 리터럴 토큰: one, sometext, main,…
-• 문자 연산:
-    ◦ 문자 합치기: +
-    ◦ 리터럴 대체: |The name is ${name}|
-• 산술 연산:
-    ◦ Binary operators: +, -, *, /, %
-    ◦ Minus sign (unary operator): -
-• 불린 연산:
-    ◦ Binary operators: and, or
-    ◦ Boolean negation (unary operator): !, not
-• 비교와 동등:
-    ◦ 비교: >, <, >=, <= (gt, lt, ge, le)
-    ◦ 동등 연산: ==, != (eq, ne)
-• 조건 연산:
-    ◦ If-then: (if) ? (then)
-    ◦ If-then-else: (if) ? (then) : (else)
-    ◦ Default: (value) ?: (defaultvalue)
-• 특별한 토큰:
-    ◦ No-Operation: _
+• 간단한 표현:<br>
+   ㅤ ◦ 변수 표현식: ${...}<br>
+ ㅤ   ◦ 선택 변수 표현식: *{...}<br>
+ㅤ    ◦ 메시지 표현식: #{...}<br>
+ㅤ    ◦ 링크 URL 표현식: @{...}<br>
+ㅤ    ◦ 조각 표현식: ~{...}<br>
+• 리터럴<br>
+  ㅤ  ◦ 텍스트: 'one text', 'Another one!',…<br>
+ ㅤ   ◦ 숫자: 0, 34, 3.0, 12.3,…<br>
+ ㅤ   ◦ 불린: true, false<br>
+ ㅤ   ◦ 널: null<br>
+ ㅤ   ◦ 리터럴 토큰: one, sometext, main,…<br>
+• 문자 연산:<br>
+   ㅤ ◦ 문자 합치기: +<br>
+  ㅤ  ◦ 리터럴 대체: |The name is ${name}|<br>
+• 산술 연산:<br>
+  ㅤ  ◦ Binary operators: +, -, *, /, %<br>
+ ㅤ   ◦ Minus sign (unary operator): -<br>
+• 불린 연산:<br>
+ ㅤ   ◦ Binary operators: and, or<br>
+  ㅤ  ◦ Boolean negation (unary operator): !, not<br>
+• 비교와 동등:<br>
+   ㅤ ◦ 비교: >, <, >=, <= (gt, lt, ge, le)<br>
+  ㅤ  ◦ 동등 연산: ==, != (eq, ne)<br>
+• 조건 연산:<br>
+ ㅤ   ◦ If-then: (if) ? (then)<br>
+ ㅤ   ◦ If-then-else: (if) ? (then) : (else)<br>
+ ㅤ   ◦ Default: (value) ?: (defaultvalue)<br>
+• 특별한 토큰:<br>
+  ㅤ  ◦ No-Operation: _<br>
 
 https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#standard-expression-syntax
 
@@ -418,10 +418,12 @@ html이 1>2 false로 잘 출력된 모습
 
 ### checkbox 체크, 해제 처리
 
+> 화면
+
 * html은 값과 상관없이 checked 속성만 있으면 checkbox를 check한다.
 * 타임리프의 th:checked는 false인 경우 checked 속성을 제거한다.
 
-> 화면
+* Controller에서 isChecked 불린 값을 넘겨서 처리하면 되므로 개발자가 개발하기 편해진다.
 
 ```html
 - checked o <input type="checkbox" name="active" th:checked="${isChecked}" /><br/>
