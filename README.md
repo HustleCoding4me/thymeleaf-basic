@@ -273,8 +273,6 @@ ex ) http://localhost:8090/basic/basic-objects?paramData=HelloParam 으로 param
 
 
 
-
-
 ### 리터럴 (고정 문자 그대로 보여주기)
 
 기본적으로 공백 없이 이어서 붙이면 타임리프가 그대로 보여주는데, 공백이나 특수문자가 생길 경우가 문제가 된다.
@@ -297,3 +295,139 @@ ex ) http://localhost:8090/basic/basic-objects?paramData=HelloParam 으로 param
 
 
 
+### 타임리프 기본 연산
+
+* 내부에서 기본적인 비교, 연산은 가능하다.
+
+> 기본 연산
+
+```html
+<li>산술 연산
+        <ul>
+            <li>10 + 2 = <span th:text="10 + 2"></span></li>
+            <li>10 % 2 == 0 = <span th:text="10 % 2 == 0"></span></li>
+        </ul>
+    </li>
+    <li>비교 연산
+        <ul>
+            <li>1 > 10 = <span th:text="1 &gt; 10"></span></li>
+            <li>1 gt 10 = <span th:text="1 gt 10"></span></li>
+            <li>1 >= 10 = <span th:text="1 >= 10"></span></li>
+            <li>1 ge 10 = <span th:text="1 ge 10"></span></li>
+            <li>1 == 1 = <span th:text="1 == 10"></span></li>
+            <li>1 != 1 = <span th:text="1 != 10"></span></li>
+        </ul>
+    </li>
+```
+
+> 조건부 출력
+
+
+* 기본 삼항연산자
+
+```html
+   <li>조건식
+        <ul>
+            <li>(10 % 2 == 0)? '짝수':'홀수' = <span th:text="(10 % 2 == 0)? '짝수':'홀수'"></span></li>
+        </ul>
+    </li>
+```
+* Elvis 연산자
+
+```html
+    <li>Elvis 연산자
+        <ul>
+            <li>${data}?: '데이터가 없습니다.' = <span th:text="${data}?: '데이터가 없습니다.'"></span></li>
+            --null이면 오른쪽 '데이터가 없습니다' 가 출력된다.
+            <li>${nullData}?: '데이터가 없습니다.' = <span th:text="${nullData}?: '데이터가 없습니다.'"></span></li>
+        </ul>
+    </li>
+```
+
+* No-Operation
+
+`_` 을 입력하여 null이 들어오면 해당 태그를 타임리프를 무효화하고 기본 html이 출력되게 한다.
+
+```html
+    <li>No-Operation
+        <ul>
+            <li>${data}?: _ = <span th:text="${data}?: _">데이터가 없습니다.</span></li>
+            <li>${nullData}?: _ = <span th:text="${nullData}?: _">데이터가 없습니다.</span></li>
+        </ul>
+    </li>
+```
+
+
+* Controller에서 값 받아서 조건문 생성하기
+
+```html
+    <li>test
+        <ul>
+            <li>${test1} >  ${test2}<span th:text="${test1} > ${test2}"></span></li>
+        </ul>
+    </li>
+```
+
+```java
+    @GetMapping("/operation")
+    public String operation(Model model) {
+        model.addAttribute("nullDate", null);
+        model.addAttribute("data", "Spring!");
+        model.addAttribute("test1", 1);
+        model.addAttribute("test2", 2);
+
+        return "basic/operation";
+    }
+```
+
+html이 1>2 false로 잘 출력된 모습
+![image](https://user-images.githubusercontent.com/37995817/165972426-9e3e2b44-4b34-459a-bf47-9ea3250d2dbb.png)
+
+
+### Attribute 설정,추가 
+
+* 속성 설정
+
+> 화면
+
+* 그냥 th가  덮어쓴다.
+
+```html
+<input type="text" name="mock" th:name="userA" />
+<input type="text" name="mock" th:name="${data}" />
+```
+
+![image](https://user-images.githubusercontent.com/37995817/165979903-584846ca-5de6-460f-9df6-ea9b3be34edd.png)
+
+* 속성 추가
+
+> 화면
+
+* class 명의 앞, 뒤에 추가
+
+```html
+//띄어쓰기 신경
+- th:attrappend = <input type="text" class="text" th:attrappend="class=' large'" /><br/>
+- th:attrprepend = <input type="text" class="text" th:attrprepend="class='large '" /><br/>
+//띄어쓰기 알아서 해줌
+- th:classappend = <input type="text" class="text" th:classappend="large" /><br/>
+```
+
+![image](https://user-images.githubusercontent.com/37995817/165980206-4ae5fb26-e7e0-4e7a-b13d-68aad8a40be9.png)
+
+
+### checkbox 체크, 해제 처리
+
+* html은 값과 상관없이 checked 속성만 있으면 checkbox를 check한다.
+* 타임리프의 th:checked는 false인 경우 checked 속성을 제거한다.
+
+> 화면
+
+```html
+- checked o <input type="checkbox" name="active" th:checked="${isChecked}" /><br/>
+- checked x <input type="checkbox" name="active" th:checked="${isChecked}" /><br/>
+
+- checked=false <input type="checkbox" name="active" checked="false" /><br/>
+```
+
+![image](https://user-images.githubusercontent.com/37995817/165980316-e98a1287-7abe-4d7b-ba37-935f642b85e2.png)
