@@ -104,3 +104,28 @@ Text Escape
 </div>
 -- first란 지역변수에 user[0]을 삽입하여 사용.
 ```
+
+------------------------------------------------
+
+
+### 기본객체
+
+Thymeleaf는 기본적으로 request, response, session, servletContext, local을 제공한다.
+
+```html
+<ul>
+    <li>request = <span th:text="${#request}"></span></li>
+    <li>response = <span th:text="${#response}"></span></li>
+    <li>session = <span th:text="${#session}"></span></li>
+    <li>servletContext = <span th:text="${#servletContext}"></span></li>
+    <li>locale = <span th:text="${#locale}"></span></li>
+</ul>
+```
+
+
+
+
+
+
+
+
