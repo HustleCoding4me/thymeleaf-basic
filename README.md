@@ -454,3 +454,23 @@ html이 1>2 false로 잘 출력된 모습
 ![image](https://user-images.githubusercontent.com/37995817/165980316-e98a1287-7abe-4d7b-ba37-935f642b85e2.png)
 
 //
+
+
+### if, unless 조건
+
+> 화면
+
+* 조건을 만족하지 않으면 태그 자체를 무효화한다.
+* 예제에서는 유저 나이가 
+
+```html
+ <tr th:each="user, userStat : ${users}">
+        <td th:text="${userStat.count}">1</td>
+        <td th:text="${user.username}">username</td>
+        <td>
+            <span th:text="${user.age}">0</span>
+            <span th:text="'미성년자'" th:if="${user.age lt 20}"></span>  20살 lessthan
+            <span th:text="'미성년자'" th:unless="${user.age ge 20}"></span> 20살 이상이 아니면
+        </td>
+    </tr>
+```
