@@ -30,15 +30,15 @@
     <td th:text="${userStat.count}">username</td>
     <td th:text="${user.username}">username</td>
     <td th:text="${user.age}">0</td>
+    count = <span th:text="${userStat.count}"></span> //개수 1부터
+    size = <span th:text="${userStat.size}"></span>
+    even? = <span th:text="${userStat.even}"></span>//루프가 짝수다
+    odd? = <span th:text="${userStat.odd}"></span>//루프가 홀수다
+    first? = <span th:text="${userStat.first}"></span> //루프가 처음
+    last? = <span th:text="${userStat.last}"></span>//루프가 마지막이냐
+    current = <span th:text="${userStat.current}"></span>//현재 객체
     <td>
       index = <span th:text="${userStat.index}"></span> //인덱스 0부터
-      count = <span th:text="${userStat.count}"></span> //개수 1부터
-      size = <span th:text="${userStat.size}"></span>
-      even? = <span th:text="${userStat.even}"></span>//루프가 짝수다
-      odd? = <span th:text="${userStat.odd}"></span>//루프가 홀수다
-      first? = <span th:text="${userStat.first}"></span> //루프가 처음
-      last? = <span th:text="${userStat.last}"></span>//루프가 마지막이냐
-      current = <span th:text="${userStat.current}"></span>//현재 객체
     </td>
   </tr>
 </table>
