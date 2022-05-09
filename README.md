@@ -461,7 +461,7 @@ html이 1>2 false로 잘 출력된 모습
 > 화면
 
 * 조건을 만족하지 않으면 태그 자체를 무효화한다.
-* 예제에서는 유저 나이가 
+* 예제에서는 유저 나이 조건
 
 ```html
  <tr th:each="user, userStat : ${users}">
@@ -476,3 +476,112 @@ html이 1>2 false로 잘 출력된 모습
 ```
 
 ###
+
+
+
+
+
+### block 태그 (타임리프 유일)
+
+> 화면
+
+```html
+<th:block th:each="user : ${users}">
+    <div>
+        사용자 이름1 <span th:text="${user.username}"></span>
+        사용자 나이1 <span th:text="${user.age}"></span>
+    </div>
+    <div>
+        요약 <span th:text="${user.username} + ' / ' + ${user.age}"></span>
+    </div>
+</th:block>
+```
+
+* 전체를 긁어서 반복을 돌리고 싶을 때 사용한다. (each만으로 해결하기 어려울 때)
+
+
+### Template으로 조각내어 파일 관리
+
+> ex) Footer 파일을 따로 분리하여 관리하기
+
+```html
+<footer th:fragment="copy">
+    푸터 자리 입니다.
+</footer>
+
+<footer th:fragment="copyParam (param1, param2)">
+    <p>파라미터 자리 입니다.</p>
+    <p th:text="${param1}"></p>
+    <p th:text="${param2}"></p>
+</footer>
+```
+
+* th:fragment로 이름 선언하여 해당 컴포넌트 작성
+
+```html
+<body>
+<h1>부분 포함</h1>
+<h2>부분 포함 insert</h2>
+<div th:insert="~{template/fragment/footer :: copy}"></div>
+div 태그 내부에 insert <div><인서트></div>
+
+<h2>부분 포함 replace</h2>
+<div th:replace="~{template/fragment/footer :: copy}"></div>
+div 자체도 아예 replace
+
+
+<h2>부분 포함 단순 표현식</h2>
+<div th:replace="template/fragment/footer :: copy"></div>
+
+<h1>파라미터 사용</h1>
+<div th:replace="~{template/fragment/footer :: copyParam ('데이터1', '데이터2')}"></div>
+</body>
+```
+
+* 붙여놓길 원하는 html파일에서 th:insert, th:replace 이용하여 {경로 :: 이름} 삽입
+* th:insert는 외부 태그 안에 삽입
+* th:replace는 외부 태그 자체를 교체
+
+* 메서드처럼 파라미터도 받을 수 있다.
+
+
+### Template 조각이 아닌, 통짜 파일 삽입
+
+
+> 교체용 Header template
+
+```html
+<head th:fragment="common_header(title,links)">
+
+    <title th:replace="${title}">레이아웃 타이틀</title>
+
+    <!-- 공통 -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/awesomeapp.css}">
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+    <script type="text/javascript" th:src="@{/sh/scripts/codebase.js}"></script>
+
+    <!-- 추가 -->
+    <th:block th:replace="${links}" />
+
+</head>
+
+```
+
+* th:fragment="common_header(title,links)"를 선언하여 이게 fragment 교체용 템프릿이고, common_header의 id와 title,links 인자를 받는다고 선언
+* 인자로 받은 title, links는 th:replace로 교체
+
+
+> Template 사용 예제
+
+```html
+<head th:replace="template/layout/base :: common_header(~{::title},~{::link})">
+    <title>메인 타이틀</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/themes/smoothness/jquery-ui.css}">
+</head>
+```
+
+* th:replace="template/layout/base :: common_header(~{::title},~{::link})"로 해당경로의 :: common_header 이름의 Template 소환,
+* ~{::title}로 내 title, link를 인자로 전송하여 Template에서 th:replace 시켜서 소스 변환. 
+
+> 마찬가지로 html에 선언해서 통짜 html Template을 생성할 수도 있다.
